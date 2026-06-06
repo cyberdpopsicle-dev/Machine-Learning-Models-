@@ -63,15 +63,26 @@ Compared to a standard DQN, DDQN typically delivers:
 
 Educational and research use.
 
+## Architecture
+
+```text
 ┌──────────────────────────────────────────────┐
-              │          Select Max Action (Best a')         │
-              ▼                                              │
-    ┌───────────────────┐                         ┌──────────┴──────────┐
-    │                   │                         │                     │
-    │   Policy Network  ├────────────────────────►│    Target Network   │
-    │    Weights (θ)    │                         │    Weights (θ⁻)     │
-    │                   │                         │                     │
-    └───────────────────┘                         └──────────┬──────────┘
-              ▲                                              │
-              │                                              ▼
-              └────────── Updates θ⁻ Every N Steps ──────────┘
+│          Select Max Action (Best a')         │
+▼                                              │
+┌───────────────────┐               ┌──────────┴──────────┐
+│                   │               │                     │
+│   Policy Network  ├──────────────►│    Target Network   │
+│    Weights (θ)    │               │    Weights (θ⁻)     │
+│                   │               │                     │
+└───────────────────┘               └──────────┬──────────┘
+         ▲                                     │
+         │                                     ▼
+         └──── Updates θ⁻ Every N Steps ──────┘
+```
+
+* **Policy Network (θ):** Selects actions and learns from experience.
+* **Target Network (θ⁻):** Provides stable target Q-values and updates periodically.
+* **Replay Buffer:** Stores past transitions for randomized training.
+
+The Policy Network chooses the best next action, while the Target Network evaluates that action using frozen weights. Periodic synchronization keeps learning stable and reduces Q-value overestimation.
+
