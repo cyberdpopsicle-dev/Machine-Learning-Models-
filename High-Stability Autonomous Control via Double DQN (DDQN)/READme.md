@@ -63,3 +63,15 @@ Compared to a standard DQN, DDQN typically delivers:
 
 Educational and research use.
 
+┌──────────────────────────────────────────────┐
+              │          Select Max Action (Best a')         │
+              ▼                                              │
+    ┌───────────────────┐                         ┌──────────┴──────────┐
+    │                   │                         │                     │
+    │   Policy Network  ├────────────────────────►│    Target Network   │
+    │    Weights (θ)    │                         │    Weights (θ⁻)     │
+    │                   │                         │                     │
+    └───────────────────┘                         └──────────┬──────────┘
+              ▲                                              │
+              │                                              ▼
+              └────────── Updates θ⁻ Every N Steps ──────────┘
