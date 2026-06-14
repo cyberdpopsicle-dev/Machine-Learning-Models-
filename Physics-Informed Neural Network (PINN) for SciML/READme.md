@@ -1,4 +1,4 @@
-#  Physics-Informed Neural Network (PINN) for SciML
+# Day 5 : Physics-Informed Neural Network (PINN) for SciML
 
 An advanced Scientific Machine Learning (SciML) pipeline constructing a Physics-Informed Neural Network (PINN). By embedding partial differential equations (PDEs) directly into the network's loss function via automated differentiation (Autograd), the model learns to simulate physical systems while strictly conforming to conservation laws.
 
