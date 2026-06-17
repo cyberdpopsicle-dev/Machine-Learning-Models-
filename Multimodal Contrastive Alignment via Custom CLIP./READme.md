@@ -10,7 +10,6 @@ The framework jointly trains both encoders using a symmetric **InfoNCE Contrasti
 
 The pipeline decouples raw image arrays and character strings into specialized tracking towers. Images are tokenized into spatial patches, processed via self-attention, and projected into the exact same vector dimension as the processed linguistic token sequences.
 flowchart LR
-flowchart LR
 
     A[Image Batch] --> B[Vision Transformer (ViT)]
     B --> C[Patch Attention]
