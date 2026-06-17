@@ -9,9 +9,22 @@ The framework jointly trains both encoders using a symmetric **InfoNCE Contrasti
 ## 📈 System Architecture
 
 The pipeline decouples raw image arrays and character strings into specialized tracking towers. Images are tokenized into spatial patches, processed via self-attention, and projected into the exact same vector dimension as the processed linguistic token sequences.
-[Image Batch] --> [ViT] --> [Patch Attention] --> [Image Embeddings (I_i)] --\
-                                                                               > [Cosine Similarity Matrix] --> [InfoNCE Loss]
-[Text Batch]  --> [GRU] --> [Hidden Mapping] --> [Text Embeddings (T_j)] ----/
+```mermaid
+flowchart LR
+
+    A[Image Batch] --> B[ViT]
+    B --> C[Patch Attention]
+    C --> D[Image Embeddings (I_i)]
+
+    E[Text Batch] --> F[GRU]
+    F --> G[Hidden Mapping]
+    G --> H[Text Embeddings (T_j)]
+
+    D --> I[Cosine Similarity Matrix]
+    H --> I
+
+    I --> J[InfoNCE Loss]
+```
 
 ## 🚀 Key Architectural Paradigms
 
