@@ -1,4 +1,3 @@
-```markdown
 # Day 6: Multimodal Contrastive Alignment via Custom Transformer-CLIP 🌐
 
 An advanced multimodal machine learning pipeline implementing a dual-tower **Contrastive Language-Image Pre-training (CLIP)** model from scratch. This architecture replaces traditional convolutional networks with a custom **Vision Transformer (ViT)** featuring Multi-Head Self-Attention (MHSA), paired symmetrically with a Gated Recurrent Unit (GRU) text engine. 
@@ -10,9 +9,6 @@ The framework jointly trains both encoders using a symmetric **InfoNCE Contrasti
 ## 📈 System Architecture
 
 The pipeline decouples raw image arrays and character strings into specialized tracking towers. Images are tokenized into spatial patches, processed via self-attention, and projected into the exact same vector dimension as the processed linguistic token sequences.
-
-
-```
 
 [Image Batch] ──► [Vision Transformer (ViT)] ──► [Patch Attention] ──► [Image Embeddings (I_i)] ┐
 ├──► [Cosine Similarity Matrix] ──► [InfoNCE Loss]
