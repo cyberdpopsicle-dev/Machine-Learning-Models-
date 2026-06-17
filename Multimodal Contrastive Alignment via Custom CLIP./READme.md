@@ -10,18 +10,54 @@ The framework jointly trains both encoders using a symmetric **InfoNCE Contrasti
 
 The pipeline decouples raw image arrays and character strings into specialized tracking towers. Images are tokenized into spatial patches, processed via self-attention, and projected into the exact same vector dimension as the processed linguistic token sequences.
 flowchart LR
-
-    A[Image Batch] --> B[Vision Transformer (ViT)]
-    B --> C[Patch Attention]
-    C --> D[Image Embeddings (Iᵢ)]
-
-    E[Text Batch] --> F[Gated Recurrent Unit (GRU)]
-    F --> G[Hidden Mapping]
-    G --> H[Text Embeddings (Tⱼ)]
-
-    D --> I[Cosine Similarity Matrix]
-    H --> I
-    I --> J[InfoNCE Loss]
+┌─────────────┐
+│ Image Batch │
+└──────┬──────┘
+       │
+       ▼
+┌──────────────────────────┐
+│ Vision Transformer (ViT) │
+└──────────┬───────────────┘
+           │
+           ▼
+┌─────────────────┐
+│ Patch Attention │
+└────────┬────────┘
+         │
+         ▼
+┌────────────────────────┐
+│ Image Embeddings (I_i) │
+└───────────┬────────────┘
+            │
+            ▼
+     ┌──────────────────┐
+     │ Cosine Similarity│
+     │      Matrix      │
+     └────────┬─────────┘
+              │
+              ▼
+      ┌─────────────┐
+      │ InfoNCE Loss│
+      └──────▲──────┘
+             │
+┌────────────┴───────────┐
+│ Text Embeddings (T_j)  │
+└───────────▲────────────┘
+            │
+            ▼
+┌─────────────────┐
+│ Hidden Mapping  │
+└────────▲────────┘
+         │
+         ▼
+┌─────────────────────────┐
+│ Gated Recurrent (GRU)   │
+└────────▲────────────────┘
+         │
+         ▼
+┌────────────┐
+│ Text Batch │
+└────────────┘
 
 ## 🚀 Key Architectural Paradigms
 
