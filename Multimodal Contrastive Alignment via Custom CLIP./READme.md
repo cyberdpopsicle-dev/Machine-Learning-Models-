@@ -12,18 +12,18 @@ The pipeline decouples raw image arrays and character strings into specialized t
 ```mermaid
 flowchart LR
 
-    A[Image Batch] --> B[ViT]
-    B --> C[Patch Attention]
-    C --> D[Image Embeddings (I_i)]
+    A["Image Batch"] --> B["Vision Transformer ViT"]
+    B --> C["Patch Attention"]
+    C --> D["Image Embeddings I_i"]
 
-    E[Text Batch] --> F[GRU]
-    F --> G[Hidden Mapping]
-    G --> H[Text Embeddings (T_j)]
+    E["Text Batch"] --> F["GRU"]
+    F --> G["Hidden Mapping"]
+    G --> H["Text Embeddings T_j"]
 
-    D --> I[Cosine Similarity Matrix]
+    D --> I["Cosine Similarity Matrix"]
     H --> I
 
-    I --> J[InfoNCE Loss]
+    I --> J["InfoNCE Loss"]
 ```
 
 ## 🚀 Key Architectural Paradigms
