@@ -11,18 +11,34 @@ The framework jointly trains both encoders using a symmetric **InfoNCE Contrasti
 The pipeline decouples raw image arrays and character strings into specialized tracking towers. Images are tokenized into spatial patches, processed via self-attention, and projected into the exact same vector dimension as the processed linguistic token sequences.
 flowchart LR
 
-    A[Image Batch] --> B[Vision Transformer (ViT)]
-    B --> C[Patch Attention]
-    C --> D[Image Embeddings (Iᵢ)]
-
-    E[Text Batch] --> F[Gated Recurrent Unit (GRU)]
-    F --> G[Hidden Mapping]
-    G --> H[Text Embeddings (Tⱼ)]
-
-    D --> I[Cosine Similarity Matrix]
-    H --> I
-    I --> J[InfoNCE Loss]┘
-
+ [Image Batch]
+      │
+      ▼
+[Vision Transformer (ViT)]
+      │
+      ▼
+[Patch Attention]
+      │
+      ▼
+[Image Embeddings (I_i)] ──┐
+                           │
+                           ▼
+                 [Cosine Similarity Matrix]
+                           │
+                           ▼
+                      [InfoNCE Loss]
+                           ▲
+                           │
+[Text Batch]               │
+      │                    │
+      ▼                    │
+[Gated Recurrent Unit (GRU)]
+      │
+      ▼
+[Hidden Mapping]
+      │
+      ▼
+[Text Embeddings (T_j)] ───┘
 
 ## 🚀 Key Architectural Paradigms
 
@@ -69,7 +85,5 @@ Presents the model with a simulated physical target and computes prediction vect
 ### 3. Interactive Semantic Search Interface
 
 An execution loop where a user inputs a continuous text string to search an image repository database. The model processes the input, identifies the closest matching spatial tensor matrix, and outputs a step-by-step mathematical breakdown explaining the latent vector dot-product similarity optimization score.
-
-```
 
 ```
