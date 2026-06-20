@@ -47,6 +47,7 @@ To monitor policy updates and training efficiency curves through TensorBoard ins
 
 ## 4.Results
 * Key Methodology Attributes:
+  ---
 1.Action-Critic Co-design: The continuous reward structure penalizes mechanical divergence alongside high instantaneous control forces to prevent virtual actuator fatigue.
 
 2 Semi-Implicit Integration: Implements robust energy-preserving numerical steps directly within the environment step function to maintain exact phase-space alignment.
