@@ -1,29 +1,109 @@
-A minimalistic implementation of absolute machine unlearning. This project demonstrates how an independent algorithm can blind-load a pre-trained machine learning model and systematically erase its entire knowledge base without knowing how it was originally trained.
+# Absolute Machine Unlearning: A Minimalistic Implementation
 
-1. The Workflow
-[Training Data] ──> (Base Model Trained) ──> Saved as 'base_model.pkl'
-                                                    │
-[No Data Access] ──> (Unlearning Model) ◄───────────┘
-                            │
-                    [Weight Shattering]
-                            │
-                            ▼
-               (Model with Absolute Amnesia)
-2. Core Stages
-Phase 1: Knowledge Acquisition (Base Model)
-Action: A standard classification model is trained on a structured dataset.
+This project demonstrates a minimal implementation of **absolute machine unlearning**, showing how an independent algorithm can load a pre-trained machine learning model and erase its learned knowledge without access to the original training data or training process.
 
-Result: The model optimizes its internal mathematical weights and coefficients to achieve high prediction accuracy. It is serialized and saved into a .pkl (pickle) file.
+## Workflow
 
-Phase 2: Blind Unlearning (The Amnesia Model)
-Action: An independent script loads the .pkl file. It has zero access to the original training data, hyper-parameters, or training history.
+```mermaid
+flowchart LR
+    A[Training Data] --> B[Train Base Model]
+    B --> C[Save as base_model.pkl]
 
-Mechanism: It directly targets the internal weight tensors (coef_ and intercept_) of the structure and overwrites them with pure Gaussian random noise.
+    C --> D[Blind Unlearning Algorithm]
+    E[No Training Data Access] --> D
 
-Phase 3: Verification
-Action: The wiped model is exposed to test data to evaluate what remains.
+    D --> F[Weight Shattering]
+    F --> G[Model with Absolute Amnesia]
+```
 
-Result: Accuracy drops from a high performing percentage directly down to random baseline chance (e.g., ~10% for a 10-class problem). The model is completely reset.
+## Phase 1: Knowledge Acquisition
 
-3. Why This Matters
-While this project demonstrates Absolute Unlearning (complete memory erasure), the underlying concept forms the bedrock of modern AI compliance. It mimics corporate privacy engineering where models must "forget" specific target data (e.g., GDPR Right to Be Forgotten) without risking data leaks or requiring expensive full-model retraining.
+```mermaid
+flowchart TD
+    A[Structured Dataset]
+    B[Train Classification Model]
+    C[Optimize Weights and Biases]
+    D[High Prediction Accuracy]
+    E[Serialize Model]
+    F[base_model.pkl]
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+```
+
+**Action:** A standard classification model is trained on a structured dataset.
+
+**Result:** The model learns internal representations by optimizing its parameters. The trained model is serialized and saved as a `.pkl` file.
+
+---
+
+## Phase 2: Blind Unlearning
+
+```mermaid
+flowchart TD
+    A[Load base_model.pkl]
+    B[No Access to Training Data]
+    C[No Hyperparameters]
+    D[No Training History]
+    E[Access Internal Weights]
+    F[Replace Weights with Gaussian Noise]
+    G[Destroy Learned Representations]
+
+    A --> E
+    B --> E
+    C --> E
+    D --> E
+    E --> F
+    F --> G
+```
+
+**Action:** An independent script loads the model without any knowledge of its original training process.
+
+**Mechanism:** The algorithm directly overwrites the model's internal parameters (`coef_` and `intercept_`) with Gaussian random noise.
+
+---
+
+## Phase 3: Verification
+
+```mermaid
+flowchart LR
+    A[Wiped Model]
+    B[Test Dataset]
+    C[Evaluate Accuracy]
+    D[High Accuracy Before]
+    E[Random Baseline Accuracy]
+    F[Complete Memory Loss]
+
+    A --> C
+    B --> C
+    C --> D
+    C --> E
+    E --> F
+```
+
+**Result:** Model performance collapses from a high accuracy level to near-random chance (e.g., ~10% for a 10-class classification task), indicating complete knowledge removal.
+
+---
+
+## Why This Matters
+
+```mermaid
+flowchart TD
+    A[Absolute Unlearning]
+    B[Privacy Compliance]
+    C[Right to Be Forgotten]
+    D[Targeted Data Removal]
+    E[Reduced Retraining Costs]
+    F[Lower Data Leakage Risk]
+
+    A --> B
+    B --> C
+    B --> D
+    B --> E
+    B --> F
+```
+
+Although this project demonstrates complete memory erasure, the underlying principles align with modern AI privacy requirements. Similar approaches motivate machine unlearning systems designed to remove specific user information while avoiding expensive full-model retraining.
