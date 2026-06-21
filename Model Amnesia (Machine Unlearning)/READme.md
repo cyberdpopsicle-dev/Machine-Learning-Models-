@@ -1,31 +1,37 @@
-# Absolute Machine Unlearning: A Minimalistic Implementation
+# Absolute Machine Unlearning: Weight Shattering in a Logistic Regression Model
 
-This project demonstrates a minimal implementation of **absolute machine unlearning**, showing how an independent algorithm can load a pre-trained machine learning model and erase its learned knowledge without access to the original training data or training process.
+This project demonstrates a minimal implementation of **absolute machine unlearning** using a Logistic Regression classifier trained on the handwritten digits dataset. An independent algorithm loads a previously trained model and destroys its learned knowledge by directly randomizing its internal parameters, without requiring access to the original training data or training process.
 
-## Workflow
+---
+
+## System Workflow
 
 ```mermaid
 flowchart LR
-    A[Training Data] --> B[Train Base Model]
-    B --> C[Save as base_model.pkl]
+    A[Digits Dataset] --> B[Train Logistic Regression Model]
+    B --> C[Evaluate Accuracy]
+    C --> D[Save Model as base_model.pkl]
 
-    C --> D[Blind Unlearning Algorithm]
-    E[No Training Data Access] --> D
+    D --> E[Blind Unlearning Algorithm]
+    F[No Training Data Access] --> E
 
-    D --> F[Weight Shattering]
-    F --> G[Model with Absolute Amnesia]
+    E --> G[Randomize coef_ and intercept_]
+    G --> H[Unlearnt Model]
+    H --> I[Test Accuracy Drops to Random Baseline]
 ```
 
-## Phase 1: Knowledge Acquisition
+---
+
+## Phase 1: Base Model Training
 
 ```mermaid
 flowchart TD
-    A[Structured Dataset]
-    B[Train Classification Model]
-    C[Optimize Weights and Biases]
-    D[High Prediction Accuracy]
-    E[Serialize Model]
-    F[base_model.pkl]
+    A[Load Digits Dataset]
+    B[Train-Test Split]
+    C[Train Logistic Regression]
+    D[Learn Model Parameters]
+    E[Evaluate Accuracy]
+    F[Save base_model.pkl]
 
     A --> B
     B --> C
@@ -34,9 +40,13 @@ flowchart TD
     E --> F
 ```
 
-**Action:** A standard classification model is trained on a structured dataset.
+### Action
 
-**Result:** The model learns internal representations by optimizing its parameters. The trained model is serialized and saved as a `.pkl` file.
+The handwritten digits dataset is loaded and divided into training and testing sets. A Logistic Regression classifier is trained using the training data.
+
+### Result
+
+The model learns meaningful patterns by optimizing its internal parameters (`coef_` and `intercept_`) to classify handwritten digits accurately. The trained model is serialized and saved as `base_model.pkl`.
 
 ---
 
@@ -45,24 +55,34 @@ flowchart TD
 ```mermaid
 flowchart TD
     A[Load base_model.pkl]
-    B[No Access to Training Data]
+    B[No Training Data]
     C[No Hyperparameters]
     D[No Training History]
-    E[Access Internal Weights]
-    F[Replace Weights with Gaussian Noise]
-    G[Destroy Learned Representations]
 
-    A --> E
+    A --> E[Access Internal Parameters]
     B --> E
     C --> E
     D --> E
-    E --> F
-    F --> G
+
+    E --> F[Randomize coef_]
+    E --> G[Randomize intercept_]
+    F --> H[Destroyed Learned Weights]
+    G --> H
 ```
 
-**Action:** An independent script loads the model without any knowledge of its original training process.
+### Action
 
-**Mechanism:** The algorithm directly overwrites the model's internal parameters (`coef_` and `intercept_`) with Gaussian random noise.
+The unlearning function loads the saved model without any knowledge of how the model was originally trained.
+
+### Mechanism
+
+If the model contains learnable parameters (`coef_` and `intercept_`), they are replaced with Gaussian random noise generated using:
+
+```python
+np.random.normal(0, 1, shape)
+```
+
+This process destroys the statistical relationships learned during training.
 
 ---
 
@@ -70,21 +90,24 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    A[Wiped Model]
+    A[Unlearnt Model]
     B[Test Dataset]
     C[Evaluate Accuracy]
-    D[High Accuracy Before]
-    E[Random Baseline Accuracy]
-    F[Complete Memory Loss]
 
     A --> C
     B --> C
-    C --> D
-    C --> E
-    E --> F
+
+    C --> D[Accuracy Collapse]
+    D --> E[Approximately Random Guessing]
 ```
 
-**Result:** Model performance collapses from a high accuracy level to near-random chance (e.g., ~10% for a 10-class classification task), indicating complete knowledge removal.
+### Result
+
+The modified model is evaluated using the original test set. Since the learned parameters have been completely randomized, the model loses its ability to recognize digit patterns.
+
+* Original accuracy: High classification performance.
+* Post-unlearning accuracy: Near random baseline.
+* Expected random accuracy for 10 classes: Approximately **10%**.
 
 ---
 
@@ -92,18 +115,16 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    A[Absolute Unlearning]
-    B[Privacy Compliance]
-    C[Right to Be Forgotten]
-    D[Targeted Data Removal]
-    E[Reduced Retraining Costs]
-    F[Lower Data Leakage Risk]
+    A[Parameter Destruction]
+    B[Model Forgetting]
+    C[Machine Unlearning Research]
+    D[Privacy Preservation]
+    E[Data Deletion Compliance]
 
     A --> B
     B --> C
-    B --> D
-    B --> E
-    B --> F
+    C --> D
+    C --> E
 ```
 
-Although this project demonstrates complete memory erasure, the underlying principles align with modern AI privacy requirements. Similar approaches motivate machine unlearning systems designed to remove specific user information while avoiding expensive full-model retraining.
+This implementation demonstrates a simple form of machine unlearning by directly destroying learned parameters. Although real-world machine unlearning often focuses on removing specific training samples rather than erasing the entire model, this approach illustrates how learned knowledge is stored within model parameters and how manipulating those parameters can eliminate previously acquired information.
