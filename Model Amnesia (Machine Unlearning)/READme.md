@@ -5,7 +5,7 @@ This project demonstrates a minimal implementation of **absolute machine unlearn
 ---
 
 ## System Workflow
-
+ 
 ```mermaid
 flowchart LR
     A[Digits Dataset] --> B[Train Logistic Regression Model]
