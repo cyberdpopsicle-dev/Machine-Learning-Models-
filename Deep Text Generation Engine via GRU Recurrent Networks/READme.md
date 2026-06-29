@@ -83,7 +83,6 @@ Place it in your active project directory before training the model.
 ---
 
 ## 🧠 Model Architecture
-
 1. Character → Index Encoding
 2. Embedding Layer
 3. GRU Recurrent Network
