@@ -39,5 +39,6 @@ This ensures that the predicted forces are strictly conservative and physically 
 <img width="526" height="150" alt="image" src="https://github.com/user-attachments/assets/ae590002-968d-4e4e-a966-26a2b193bd42" />
 <img width="291" height="24" alt="image" src="https://github.com/user-attachments/assets/76badf47-3992-4092-9c68-d906799a528b" />
 <img width="520" height="203" alt="image" src="https://github.com/user-attachments/assets/93df8a19-a604-40bb-9f41-8c275e5ffdf8" />
+
 ---
 
