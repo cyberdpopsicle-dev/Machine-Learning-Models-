@@ -31,3 +31,13 @@ This ensures that the predicted forces are strictly conservative and physically 
 1. **Graph Construction:** Atomic positions ($\mathbf{R}$) are mapped to adjacency lists using a pairwise distance matrix thresholded by a radial cut-off.
 2. **Energy Prediction ($E$):** Node features (chemical species) and edge features (distances) are passed through an Edge-conditioned Multi-Layer Perceptron (MLP) to output a scalar potential energy.
 3. **Autograd Force Derivation ($\mathbf{F}$):** Dynamic backpropagation through the coordinates layer computes the analytical gradients.
+---
+## Results and Visualization:
+<img width="768" height="393" alt="image" src="https://github.com/user-attachments/assets/94056273-d4b8-4c94-a3d4-306379e46e55" />
+<img width="618" height="393" alt="image" src="https://github.com/user-attachments/assets/c097e6b2-03b4-4980-a483-fa55892fe21c" />
+<img width="568" height="96" alt="image" src="https://github.com/user-attachments/assets/8481243b-34f2-48cd-98db-1e7ddaa81673" />
+<img width="526" height="150" alt="image" src="https://github.com/user-attachments/assets/ae590002-968d-4e4e-a966-26a2b193bd42" />
+<img width="291" height="24" alt="image" src="https://github.com/user-attachments/assets/76badf47-3992-4092-9c68-d906799a528b" />
+<img width="520" height="203" alt="image" src="https://github.com/user-attachments/assets/93df8a19-a604-40bb-9f41-8c275e5ffdf8" />
+---
+
