@@ -50,6 +50,13 @@ Standard explicit solvers (like Euler or naive Leapfrog) introduce numerical dri
 * **Implicit Correction Module:** Fixed-point algebraic solvers seamlessly integrated into the post-training simulation pipeline to anchor long-term rollouts.
 
 ---
+## Results (Graphical):
+* <img width="689" height="393" alt="image" src="https://github.com/user-attachments/assets/1ed0dccc-d0d9-44aa-b1bf-46079ae088e2" />
+* <img width="717" height="393" alt="image" src="https://github.com/user-attachments/assets/1c76f833-8f45-4479-ba25-4ac994b8a2f5" />
+* <img width="989" height="690" alt="image" src="https://github.com/user-attachments/assets/f67a4920-3df6-4696-959c-2d0f779d8d95" />
+* <img width="398" height="42" alt="image" src="https://github.com/user-attachments/assets/ace71328-1cc5-45bf-b9cd-55db72271709" />
+
+
 
 ## Mathematical Verification & Convergence
 
