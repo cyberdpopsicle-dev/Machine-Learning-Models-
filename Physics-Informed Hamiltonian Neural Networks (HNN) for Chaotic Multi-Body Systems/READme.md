@@ -1,4 +1,4 @@
-# Physics-Informed Hamiltonian Neural Networks (HNNs) for Chaotic Multi-Body Systems
+#Day 11: Physics-Informed Hamiltonian Neural Networks (HNNs) for Chaotic Multi-Body Systems
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Framework: PyTorch](https://img.shields.io/badge/Framework-PyTorch-ee4c2c.svg)](https://pytorch.org/)
