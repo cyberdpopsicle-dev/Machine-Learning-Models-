@@ -1,0 +1,14 @@
+{
+    "architecture": "HamiltonianNeuralNetwork",
+    "input_dim": 4,
+    "hidden_dim": 128,
+    "dt_used": 0.05,
+    "final_energy_std": 0.14827,
+    "system_parameters": {
+        "mass_1": 1.0,
+        "mass_2": 1.0,
+        "length_1": 1.0,
+        "length_2": 1.0,
+        "gravity": 9.81
+    }
+}
