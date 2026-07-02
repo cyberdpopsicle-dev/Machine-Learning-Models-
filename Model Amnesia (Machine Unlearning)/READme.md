@@ -1,4 +1,4 @@
-# Day 8 :Absolute Machine Unlearning: Weight Shattering in a Logistic Regression Model
+# Day 9 :Absolute Machine Unlearning: Weight Shattering in a Logistic Regression Model
 
 This project demonstrates a minimal implementation of **absolute machine unlearning** using a Logistic Regression classifier trained on the handwritten digits dataset. An independent algorithm loads a previously trained model and destroys its learned knowledge by directly randomizing its internal parameters, without requiring access to the original training data or training process.
 
