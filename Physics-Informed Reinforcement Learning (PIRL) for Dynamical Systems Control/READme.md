@@ -1,4 +1,4 @@
-# Physics-Informed Reinforcement Learning (PIRL) for Dynamical Systems Control
+#Day 10: Physics-Informed Reinforcement Learning (PIRL) for Dynamical Systems Control
 
 An implementation of a Physics-Informed Reinforcement Learning pipeline designed to optimize control inputs for non-equilibrium physical systems. This notebook couples a high-fidelity structural state space with a continuous Proximal Policy Optimization (PPO) agent to solve constrained boundary-value optimization problems directly inside Google Colab.
 
