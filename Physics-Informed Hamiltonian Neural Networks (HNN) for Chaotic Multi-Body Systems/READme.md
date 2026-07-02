@@ -67,6 +67,26 @@ $$\text{Energy } \sigma \approx 0.148$$
 This structural stability demonstrates that machine learning can be used not just as a black-box curve fitter, but as a mathematically sound engine for precise physical discovery.
 
 ---
+## How to Reload This Model Anywhere Later
+When you want to spin this model back up in a fresh session or deploy it to a control loop, you can reconstruct it smoothly like this:
+
+Python
+# 1. Load your metadata configuration
+with open("hnn_double_pendulum/hnn_metadata.json", "r") as f:
+    meta = json.load(f)
+
+# 2. Re-instantiate the class matching original dimensions
+loaded_hnn = HamiltonianNeuralNetwork(
+    input_dim=meta["input_dim"], 
+    hidden_dim=meta["hidden_dim"]
+)
+
+# 3. Inject the trained weights back into the skeleton
+loaded_hnn.load_state_dict(torch.load("hnn_double_pendulum/hnn_weights.pt"))
+loaded_hnn.eval()
+
+print("Model successfully reloaded with identical physical properties!")
+---
 
 ## License
 
