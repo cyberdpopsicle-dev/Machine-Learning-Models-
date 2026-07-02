@@ -50,13 +50,6 @@ Standard explicit solvers (like Euler or naive Leapfrog) introduce numerical dri
 * **Implicit Correction Module:** Fixed-point algebraic solvers seamlessly integrated into the post-training simulation pipeline to anchor long-term rollouts.
 
 ---
-## Results (Graphical):
-* <img width="689" height="393" alt="image" src="https://github.com/user-attachments/assets/1ed0dccc-d0d9-44aa-b1bf-46079ae088e2" />
-* <img width="717" height="393" alt="image" src="https://github.com/user-attachments/assets/1c76f833-8f45-4479-ba25-4ac994b8a2f5" />
-* <img width="989" height="690" alt="image" src="https://github.com/user-attachments/assets/f67a4920-3df6-4696-959c-2d0f779d8d95" />
-* <img width="398" height="42" alt="image" src="https://github.com/user-attachments/assets/ace71328-1cc5-45bf-b9cd-55db72271709" />
-
-
 
 ## Mathematical Verification & Convergence
 
@@ -67,25 +60,50 @@ $$\text{Energy } \sigma \approx 0.148$$
 This structural stability demonstrates that machine learning can be used not just as a black-box curve fitter, but as a mathematically sound engine for precise physical discovery.
 
 ---
-## How to Reload This Model Anywhere Later
-When you want to spin this model back up in a fresh session or deploy it to a control loop, you can reconstruct it smoothly like this:
+# How to Reload This Model Anywhere Later
 
-Python
-# 1. Load your metadata configuration
+When you want to use this model again in your session or deploy it to a control loop, you can reload it as follows.
+
+ **1. Load the metadata configuration**
+
+```python
+import json
+import torch
+
 with open("hnn_double_pendulum/hnn_metadata.json", "r") as f:
     meta = json.load(f)
+```
 
-# 2. Re-instantiate the class matching original dimensions
+**2. Recreate the model with the original architecture**
+
+```python
 loaded_hnn = HamiltonianNeuralNetwork(
-    input_dim=meta["input_dim"], 
+    input_dim=meta["input_dim"],
     hidden_dim=meta["hidden_dim"]
 )
+```
 
-# 3. Inject the trained weights back into the skeleton
-loaded_hnn.load_state_dict(torch.load("hnn_double_pendulum/hnn_weights.pt"))
+**3. Load the trained weights**
+
+```python
+loaded_hnn.load_state_dict(
+    torch.load("hnn_double_pendulum/hnn_weights.pt")
+)
 loaded_hnn.eval()
+```
 
+**4. Confirm successful reload**
+
+```python
 print("Model successfully reloaded with identical physical properties!")
+```
+---
+## Results (Graphical):
+* <img width="689" height="393" alt="image" src="https://github.com/user-attachments/assets/1ed0dccc-d0d9-44aa-b1bf-46079ae088e2" />
+* <img width="717" height="393" alt="image" src="https://github.com/user-attachments/assets/1c76f833-8f45-4479-ba25-4ac994b8a2f5" />
+* <img width="989" height="690" alt="image" src="https://github.com/user-attachments/assets/f67a4920-3df6-4696-959c-2d0f779d8d95" />
+* <img width="398" height="42" alt="image" src="https://github.com/user-attachments/assets/ace71328-1cc5-45bf-b9cd-55db72271709" />
+
 ---
 
 ## License
