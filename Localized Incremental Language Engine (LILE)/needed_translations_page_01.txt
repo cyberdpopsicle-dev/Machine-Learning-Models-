@@ -1,0 +1,4 @@
+# Translation required for page: page_01
+# Format: unknown_word = english_translation
+
+koshur iukh khyon tsot = 
