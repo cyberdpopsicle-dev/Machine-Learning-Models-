@@ -1,101 +1,155 @@
-Localized Incremental Language Engine (LILE)
+# Day 12 : Localized Incremental Language Engine (LILE)
+
 A highly efficient, open-source framework designed to bootstrap datasets and machine translation for low-resource, endangered, or undocumented languages with minimal digital footprints.
 
-Unlike massive, opaque large language models, this architecture utilizes an incremental Differentiable Symbolic Memory. It allows field researchers and linguists to convert raw document images into structured dictionaries with a dynamic, zero-weight unlearning protocol to instantly correct human feedback mistakes.
+Unlike massive, opaque large language models, LILE uses an incremental Differentiable Symbolic Memory architecture. It enables field researchers and linguists to convert raw document images into structured dictionaries while supporting a dynamic, zero-weight unlearning protocol for instantly correcting human feedback mistakes.
+
 ---
-## Key Features
-Visual Ingestion Layer: Uses Optical Character Recognition (OCR) to extract unfamiliar scripts directly from images or document scans.
 
-Familiar-Word In-Place Translation: Automatically retains structural layout and swaps out known tokens with English equivalents on the fly.
+# Key Features
 
-Automated Unknown Batching: Groups entirely new or unknown tokens into structured, standalone .txt patch files for easy manual translation.
+- **Visual Ingestion Layer** — Uses Optical Character Recognition (OCR) to extract unfamiliar scripts directly from images or document scans.
+- **Familiar-Word In-Place Translation** — Preserves the original document structure while replacing known tokens with their English equivalents.
+- **Automated Unknown Token Batching** — Groups unseen words into standalone `.txt` patch files for manual translation.
+- **Deterministic Weight Erasure (Unlearning)** — Removes an incorrect translation in a single operation without retraining or affecting the rest of the model.
+- **Part-of-Speech (POS) Profiling** — Automatically classifies newly learned vocabulary into grammatical categories such as nouns, verbs, and adjectives.
+- **Lightweight Architecture** — Runs efficiently on standard consumer hardware without requiring GPU clusters.
 
-Deterministic Weight Erasure (Unlearning): Instantly zero-out a bad translation weight in a single operation without destabilizing or retraining the rest of the engine.
-
-Part-of-Speech (POS) Profiler: Automatically pipelines and categorizes newly learned vocabulary tokens into their structural linguistic types (Nouns, Verbs, Adjectives, etc.).
-
-Zero Compute Footprint: Lightweight architecture runs smoothly on standard consumer hardware without requiring cluster GPUs.
 ---
-## Installation & Setup
-Clone the repository and install the minimal required dependencies:
 
-Bash
+# Installation
+
+Clone the repository and install the required dependencies.
+
+```bash
 git clone https://github.com/yourusername/incremental-language-engine.git
 cd incremental-language-engine
+
 pip install easyocr spacy numpy torch pandas opencv-python
-Ensure the default linguistic processing model is downloaded:
+```
 
-Bash
+Download the default spaCy language model.
+
+```bash
 python -m spacy download en_core_web_sm
- Project Architecture
-When running, the engine automatically structures your workspace into organized zones:
+```
 
-Plaintext
-├── model_storage/         # Contains serialized engine state binaries (.pt)
-├── input_images/          # Drop raw document or book photos here
-├── untranslated_dumps/    # Generated batch patch text templates (.txt)
-├── incremental_engine.py  # Core imported module codebase
-└── main.py                # Your execution pipeline script
 ---
- ## How to Use (Step-by-Step)
-1. Initialize and Process an Image
-Drop an image of your target language into input_images/. Run a processing pass to scan the image and compile a template patch file for any words the model hasn't seen yet:
 
-Python
-from incremental_engine import IncrementalLanguageEngine, ImageLanguageProcessor
+# Project Structure
 
-# 1. Initialize or load your saved language binary state
-engine = IncrementalLanguageEngine(storage_path="model_storage/my_language.pt")
+```
+.
+├── model_storage/          # Serialized engine state (.pt)
+├── input_images/           # Input document images
+├── untranslated_dumps/     # Generated translation patch files
+├── incremental_engine.py   # Core engine implementation
+└── main.py                 # Execution pipeline
+```
 
-# 2. Attach the visual processor layer
-processor = ImageLanguageProcessor(engine)
+---
 
-# 3. Scan a raw document image
-output_layout, patch_file_path = processor.process_page(
-    image_path="input_images/page_01.png", 
-    page_id="page_01"
+# Usage
+
+## 1. Process an Image
+
+Place an image in `input_images/` and process it to generate a translation patch file for unknown words.
+
+```python
+from incremental_engine import (
+    IncrementalLanguageEngine,
+    ImageLanguageProcessor,
 )
 
-print("Current Layout Layout:", output_layout)
-print("Feedback needed saved to:", patch_file_path)
-2. Provide Human Feedback
-Open the generated text file in untranslated_dumps/needed_translations_page_01.txt. It will look like this:
+# Initialize or load the language model
+engine = IncrementalLanguageEngine(
+    storage_path="model_storage/my_language.pt"
+)
 
-Plaintext
+# Create the image processor
+processor = ImageLanguageProcessor(engine)
+
+# Process a document page
+output_layout, patch_file_path = processor.process_page(
+    image_path="input_images/page_01.png",
+    page_id="page_01",
+)
+
+print("Current layout:", output_layout)
+print("Translation file:", patch_file_path)
+```
+
+---
+
+## 2. Provide Human Translations
+
+Open the generated file:
+
+```
+untranslated_dumps/needed_translations_page_01.txt
+```
+
+Example:
+
+```text
 # Translation required for page: page_01
 # Format: unknown_word = english_translation
 
-koshur = 
-lukh = 
-khyon = 
-Simply type your translations directly after the = sign and save the file:
+koshur =
+lukh =
+khyon =
+```
 
-Plaintext
+Fill in the translations:
+
+```text
 koshur = kashmiri
 lukh = people
 khyon = eat
-3. Ingest and Train the New Words
-Feed the edited text file back into the engine. The model will instantly update its dictionary binary and auto-assign Grammatical Part-of-Speech classifications:
+```
 
-Python
-# Import the feeding helpers to parse the manual edits
+Save the file when finished.
+
+---
+
+## 3. Learn the New Vocabulary
+
+Import the edited translation file back into the engine.
+
+```python
 from main import feed_batch_translations
 
-# Ingest and save to memory binary
-feed_batch_translations("untranslated_dumps/needed_translations_page_01.txt")
-Now, the next time you process an image containing those exact words, the model will successfully translate them in-place!
+feed_batch_translations(
+    "untranslated_dumps/needed_translations_page_01.txt"
+)
+```
 
-4. Correcting Mistakes (Instant Unlearning)
-If a wrong translation was provided, you can invoke the zero-weight unlearning protocol to instantly wipe the mistake clean without needing to clear your entire database:
+The engine will:
 
-Python
+- Update its dictionary.
+- Save the new vocabulary.
+- Automatically assign Part-of-Speech (POS) tags.
+
+Future documents containing these words will be translated automatically.
+
+---
+
+## 4. Correct an Incorrect Translation
+
+If a translation is incorrect, use the unlearning function to remove it and replace it immediately.
+
+```python
 from main import correct_mistake
 
-# Zero-weights the old translation and instantly maps the correct translation
-'''
-Python
-correct_mistake(wrong_unknown_word="koshur", correct_english_translation="kashmiri")
-'''
+correct_mistake(
+    wrong_unknown_word="koshur",
+    correct_english_translation="kashmiri",
+)
+```
 
-📝 License
-Distributed under the MIT License. See LICENSE for more information.
+The previous mapping is erased without retraining the entire model.
+
+---
+# License
+
+This project is licensed under the **MIT License**. See the `LICENSE` file for details.
